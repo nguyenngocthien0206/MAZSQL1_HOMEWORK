@@ -9,16 +9,16 @@ month from the first month (Jan 2019) they pay the successful transaction (only 
 2019).*/
 WITH query_table AS
 (
-SELECT ft.transaction_id, ft.customer_id, ft.transaction_time
-FROM dbo.fact_transaction_2019 ft
-JOIN dbo.dim_scenario sc ON sc.scenario_id = ft.scenario_id
-WHERE ft.status_id = 1 AND sc.sub_category = 'Telco Card')
+	SELECT ft.transaction_id, ft.customer_id, ft.transaction_time
+	FROM dbo.fact_transaction_2019 ft
+	JOIN dbo.dim_scenario sc ON sc.scenario_id = ft.scenario_id
+	WHERE ft.status_id = 1 AND sc.sub_category = 'Telco Card')
 , user_first_month AS
 (
-SELECT customer_id
-    , MIN(MONTH(transaction_time)) AS first_month
-FROM query_table
-GROUP BY customer_id)
+	SELECT customer_id
+		, MIN(MONTH(transaction_time)) AS first_month
+	FROM query_table
+	GROUP BY customer_id)
 , new_user_by_month AS
 (
     SELECT first_month
@@ -43,16 +43,16 @@ ORDER BY 1,2
 retention = number of retained customers / total users of the first month.*/
 WITH query_table AS
 (
-SELECT ft.transaction_id, ft.customer_id, ft.transaction_time
-FROM dbo.fact_transaction_2019 ft
-JOIN dbo.dim_scenario sc ON sc.scenario_id = ft.scenario_id
-WHERE ft.status_id = 1 AND sc.sub_category = 'Telco Card')
+	SELECT ft.transaction_id, ft.customer_id, ft.transaction_time
+	FROM dbo.fact_transaction_2019 ft
+	JOIN dbo.dim_scenario sc ON sc.scenario_id = ft.scenario_id
+	WHERE ft.status_id = 1 AND sc.sub_category = 'Telco Card')
 , user_first_month AS
 (
-SELECT customer_id
-    , MIN(MONTH(transaction_time)) AS first_month
-FROM query_table
-GROUP BY customer_id)
+	SELECT customer_id
+		, MIN(MONTH(transaction_time)) AS first_month
+	FROM query_table
+	GROUP BY customer_id)
 , new_user_by_month AS
 (
     SELECT first_month
